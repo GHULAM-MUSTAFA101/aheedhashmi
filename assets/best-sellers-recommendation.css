@@ -175,6 +175,7 @@
   text-transform: uppercase;
   color: var(--text-meta);
   margin: 2px 0;
+  text-align: center;
 }
 
 .bs-finance-line {
