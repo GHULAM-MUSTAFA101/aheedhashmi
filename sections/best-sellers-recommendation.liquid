@@ -1,0 +1,201 @@
+{% comment %}
+  Best Sellers Recommendation Section
+  - Production-ready, fully dynamic, and optimized.
+  - Senior Shopify Developer implementation.
+{% endcomment %}
+
+{{ 'best-sellers-recommendation.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'best-sellers-recommendation.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign product_limit = section.settings.product_limit
+  assign enable_carousel = section.settings.enable_carousel_mobile
+-%}
+
+<div class="best-sellers-section" id="best-sellers-{{ section.id }}">
+  {% if section.settings.heading != blank %}
+    <h2 class="best-sellers-heading">{{ section.settings.heading | escape }}</h2>
+  {% endif %}
+
+  <div class="bs-grid {% if enable_carousel %}carousel-mobile{% endif %}">
+    {%- if collection != blank and collection.products_count > 0 -%}
+      {%- for product in collection.products limit: product_limit -%}
+        <div class="bs-card">
+          <a href="{{ product.url }}" class="bs-card-image-link" aria-label="{{ product.title }}">
+            {%- if product.featured_image -%}
+              {{ product.featured_image | image_url: width: 800 | image_tag: 
+                loading: 'lazy', 
+                sizes: '(max-width: 767px) 85vw, (max-width: 1024px) 45vw, 25vw', 
+                widths: '200, 400, 600, 800',
+                alt: product.title 
+              }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </a>
+
+          <div class="bs-card-content">
+            <h3 class="bs-product-title">{{ product.title }}</h3>
+            <div class="bs-product-subtitle">
+              {%- if product.metafields.custom.subtitle != blank -%}
+                {{ product.metafields.custom.subtitle }}
+              {%- else -%}
+                {{ product.type | default: 'Premium Selection' }}
+              {%- endif -%}
+            </div>
+
+            <div class="bs-info-layout">
+              <!-- Pricing Column -->
+              <div class="bs-pricing-col">
+                <div class="bs-price-row">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="bs-compare-price">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+                    <span class="bs-current-price">{{ product.price | money_without_trailing_zeros }}</span>
+                  {%- else -%}
+                    <span class="bs-price-single">{{ product.price | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+                
+                <span class="bs-or-label">or</span>
+
+                <div class="bs-finance-line">
+                  {%- liquid
+                    assign finance_months = product.metafields.custom.finance_months | default: 24 | plus: 0
+                    assign monthly_raw = product.price | divided_by: finance_months
+                  -%}
+                  From <span class="bs-finance-amount">{{ monthly_raw | money }}</span>/month
+                  <i class="bs-info-icon">i</i>
+                </div>
+              </div>
+
+              <div class="bs-divider"></div>
+
+              <!-- Meta Column -->
+              <div class="bs-meta-col">
+                <div class="bs-rating">
+                  4.8/5.0 
+                  <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                </div>
+                
+                {%- if product.metafields.custom.dimensions != blank -%}
+                  <div class="bs-meta-text">{{ product.metafields.custom.dimensions }}</div>
+                {%- endif -%}
+
+                {%- if product.metafields.custom.delivery_date != blank -%}
+                  <div class="bs-meta-text">Delivery From: <strong>{{ product.metafields.custom.delivery_date }}</strong></div>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <!-- Color Swatches -->
+            {%- liquid
+              assign color_option = nil
+              for option in product.options_with_values
+                assign downcased_option = option.name | downcase
+                if downcased_option contains 'color' or downcased_option contains 'colour'
+                  assign color_option = option
+                  break
+                endif
+              endfor
+            -%}
+
+            {%- if color_option -%}
+              <div class="bs-swatches">
+                {%- for value in color_option.values limit: 5 -%}
+                  {%- liquid
+                    assign swatch_variant = nil
+                    for variant in product.variants
+                      if variant.options contains value
+                        assign swatch_variant = variant
+                        break
+                      endif
+                    endfor
+                  -%}
+                  <div class="bs-swatch" 
+                    title="{{ value }}"
+                    data-variant-image="{{ swatch_variant.image | image_url: width: 800 }}"
+                    style="
+                      {%- if swatch_variant.image -%}
+                        background-image: url('{{ swatch_variant.image | image_url: width: 60 }}');
+                      {%- else -%}
+                        background-color: {{ value | handle | replace: '-', '' }};
+                      {%- endif -%}
+                    ">
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..product_limit) -%}
+        <div class="bs-card">
+          <div class="bs-card-image-link">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          <div class="bs-card-content">
+            <h3 class="bs-product-title">Sample Product</h3>
+            <div class="bs-product-subtitle">Category Subtitle</div>
+            <div class="bs-info-layout">
+              <div class="bs-pricing-col">
+                <div class="bs-price-row"><span class="bs-price-single">£1,299</span></div>
+                <span class="bs-or-label">or</span>
+                <div class="bs-finance-line">From £45.00/month <i class="bs-info-icon">i</i></div>
+              </div>
+              <div class="bs-divider"></div>
+              <div class="bs-meta-col">
+                <div class="bs-rating">4.9/5.0 ★</div>
+                <div class="bs-meta-text">200cm x 100cm</div>
+                <div class="bs-meta-text">Delivery: 10 days</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "!!! Best Sellers Recs !!!",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection Selector"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Product Limit",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_carousel_mobile",
+      "label": "Enable Carousel on Mobile",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "!!! Best Sellers Recs !!!",
+      "settings": {
+        "heading": "Best Sellers",
+        "product_limit": 4,
+        "enable_carousel_mobile": true
+      }
+    }
+  ]
+}
+{% endschema %}

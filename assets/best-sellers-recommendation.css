@@ -1,0 +1,255 @@
+:root {
+  --graphite-dark: #202020;
+  --graphite-medium: #4a4a4a;
+  --graphite-light: #f4f4f4;
+  --graphite-border: #e6e6e6;
+  --accent-red: #ff3333;
+  --text-meta: #757575;
+}
+
+.best-sellers-section {
+  padding: 60px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.best-sellers-heading {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 40px;
+  color: var(--graphite-dark);
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+
+.bs-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .bs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .bs-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bs-grid.carousel-mobile {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .bs-grid.carousel-mobile::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .bs-grid.carousel-mobile .bs-card {
+    min-width: 85%;
+    scroll-snap-align: center;
+  }
+}
+
+.bs-card {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.bs-card-image-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background: var(--graphite-light);
+}
+
+.bs-card-image-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.bs-card:hover .bs-card-image-link img {
+  transform: scale(1.05);
+}
+
+.bs-card-content {
+  padding: 20px 15px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+}
+
+.bs-product-title {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 5px;
+  color: var(--graphite-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.bs-product-subtitle {
+  font-size: 14px;
+  color: var(--graphite-medium);
+  margin-bottom: 15px;
+  font-weight: 300;
+}
+
+.bs-info-layout {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bs-divider {
+  background: var(--graphite-border);
+  height: 80%;
+  align-self: center;
+}
+
+.bs-pricing-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: right;
+}
+
+.bs-meta-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  gap: 4px;
+}
+
+.bs-price-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.bs-compare-price {
+  text-decoration: line-through;
+  color: var(--graphite-dark);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.bs-current-price {
+  color: var(--accent-red);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.bs-price-single {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--graphite-dark);
+}
+
+.bs-or-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-meta);
+  margin: 2px 0;
+}
+
+.bs-finance-line {
+  font-size: 13px;
+  color: var(--graphite-dark);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.bs-finance-amount {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.bs-info-icon {
+  width: 12px;
+  height: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 8px;
+  font-style: normal;
+  cursor: help;
+}
+
+.bs-rating {
+  font-size: 11px;
+  color: var(--text-meta);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bs-rating svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+
+.bs-meta-text {
+  font-size: 11px;
+  color: var(--text-meta);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bs-swatches {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.bs-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+  background-size: cover;
+  background-position: center;
+}
+
+.bs-swatch:hover {
+  border-color: var(--graphite-medium);
+}
+
+.placeholder-svg {
+  background: #eee;
+}
