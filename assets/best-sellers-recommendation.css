@@ -112,6 +112,7 @@
   color: var(--graphite-medium);
   margin-bottom: 15px;
   font-weight: 300;
+  line-height: normal;
 }
 
 .bs-info-layout {
