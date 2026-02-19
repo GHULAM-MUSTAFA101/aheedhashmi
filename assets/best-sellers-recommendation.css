@@ -124,7 +124,7 @@
 }
 
 .bs-divider {
-  background: var(--graphite-border);
+  background: #828282;
   height: 80%;
   align-self: center;
 }
