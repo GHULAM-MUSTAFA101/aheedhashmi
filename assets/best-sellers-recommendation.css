@@ -100,7 +100,7 @@
 .bs-product-title {
   font-size: 18px;
   font-weight: 400;
-  margin: 0 0 5px;
+  margin: 0;
   color: var(--graphite-dark);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -108,7 +108,7 @@
 }
 
 .bs-product-subtitle {
-  font-size: 14px;
+  font-size: 21px;
   color: var(--graphite-medium);
   margin-bottom: 15px;
   font-weight: 300;
