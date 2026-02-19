@@ -217,7 +217,7 @@
 .bs-rating svg {
   width: 10px;
   height: 10px;
-  fill: currentColor;
+  fill: #000;
 }
 
 .bs-meta-text {
