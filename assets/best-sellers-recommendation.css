@@ -100,6 +100,7 @@
 .bs-product-title {
   font-size: 18px;
   font-weight: 400;
+  margin: 0 0 5px;
   color: var(--graphite-dark);
   text-transform: uppercase;
   letter-spacing: 0.5px;
