@@ -89,7 +89,7 @@
 }
 
 .bs-card-content {
-  padding: 20px 15px;
+  padding: 8px 15px 20px;
   text-align: center;
   flex-grow: 1;
   display: flex;
